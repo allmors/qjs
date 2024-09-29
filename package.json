@@ -1,0 +1,46 @@
+{
+  "name": "@allmors/qjs",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/index.mjs",
+  "bin": {
+    "run-qjs": "./bin/cli.mjs"
+  },
+  "scripts": {
+    "start": "cross-env QJS_ROOTDIR=functions QJS_PORT=5173 QJS_PREFIX=/api node --watch ./bin/cli.mjs"
+  },
+  "exports": {
+    ".": {
+      "import": "./src/index.mjs"
+    },
+    "./core": {
+      "import": "./core/index.mjs"
+    }
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md",
+    "plugins",
+    "core"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/cors": "^10.0.1",
+    "@fastify/jwt": "^9.0.1",
+    "@fastify/multipart": "^9.0.1",
+    "@fastify/static": "^8.0.1",
+    "chokidar": "^4.0.1",
+    "cross-env": "^7.0.3",
+    "fastify": "^5.0.0",
+    "fastify-plugin": "^5.0.1",
+    "filexdb": "^0.1.1",
+    "mime": "^4.0.4",
+    "open": "^10.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.3"
+  }
+}
