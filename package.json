@@ -24,8 +24,15 @@
     "plugins",
     "core"
   ],
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "qjs",
+    "lowcode",
+    "Fast api generate"
+  ],
+  "author": "@allmors",
+  "homepage": "https://github.com/allmors/qjs",
+  "repository": "https://github.com/allmors/qjs",
+  "bugs": "https://github.com/allmors/qjs/issues",
   "license": "ISC",
   "dependencies": {
     "@fastify/cors": "^10.0.1",
