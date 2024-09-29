@@ -45,7 +45,7 @@ class Files {
             type: options.type || mime.getType(filePath),
             size: fs.statSync(filePath).size,
         };
-
+        
         return await this.collection.create(fileData);
     }
 

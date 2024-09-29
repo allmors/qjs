@@ -13,11 +13,11 @@ const command = process.argv[2];
 process.env.QJS_ROOTDIR = process.env.QJS_ROOTDIR || 'functions';
 
 const template = `// @see https://github.com/allmors/qjs/
-// import qjs from '@allmors/qjs/core';
+import qjs from '@allmors/qjs/core';
 
 export default async function (params, ctx) {
-    // const User = await qjs.db.collection('user');
-    // const user = await User.insertOne({ name: "Sam", email: 'sam@codingsamrat.com' })
+    const User = await qjs.db.collection('user');
+    const user = await User.insertOne({ name: "Sam", email: 'sam@codingsamrat.com' })
 
     // or 
 
@@ -27,7 +27,9 @@ export default async function (params, ctx) {
     return ctx.reply.send({
         message: 'Hello from qjs API',
         method: ctx.method,
-        params: params
+        params: {
+            ...user
+        }
     });
 }
 `;
@@ -35,8 +37,8 @@ export default async function (params, ctx) {
 if (command === '--init') {
     if (!fs.existsSync(process.env.QJS_ROOTDIR)) {
         fs.mkdirSync(process.env.QJS_ROOTDIR);
-        const helloFile = path.join(process.env.QJS_ROOTDIR, 'qjs.mjs');
-        fs.writeFileSync(helloFile, template);
+        const qjsFile = path.join(process.env.QJS_ROOTDIR, 'qjs.mjs');
+        fs.writeFileSync(qjsFile, template);
     }
 }
 
