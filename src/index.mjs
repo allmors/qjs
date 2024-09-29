@@ -26,7 +26,7 @@ const initServer = async () => {
     await fastify.register(cors, corsPlugin);
     await fastify.register(staticFile, staticPlugin);
     await fastify.register(multipart, multipartPlugin);
-    await fastify.register(jwtPlugin, { secret: process.env.QJS_SECRET || 'QJS_SECRET', expiresIn: process.env.QJS_EXPIRESIN || '7d' });
+    await fastify.register(jwtPlugin, { secret: process.env.QJS_SECRET || 'QJS_SECRET', expiresIn: process.env.QJS_EXPIRESIN || '3d' });
 
     // Use decorator to add custom methods to fastify instance
     await fastify.decorate('db', qjsCore.db)
@@ -43,10 +43,15 @@ const initServer = async () => {
             const pathWithoutPrefix = PREFIX ? url.pathname.slice(PREFIX.length) : url.pathname;
 
             // Bearer Token (Temporarily replace router options ==> onRequest)
-            const authHeader = request['headers'].authorization;
+            const authHeader = request.headers?.authorization;
+
             if (authHeader) {
-                const token = authHeader.replace('Bearer ', '');
-                request.user = token ? await fastify.jwt.verify(token) : null;
+                try {
+                    const token = authHeader.replace('Bearer ', '');
+                    request.user = token ? await fastify.jwt.verify(token) : null;
+                } catch {
+                    request.user = null;
+                }
             } else {
                 request.user = null;
             }
