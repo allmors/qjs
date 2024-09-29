@@ -1,7 +1,8 @@
 {
-  "name": "@allmors/qjs",
+  "name": "fast-qjs",
   "version": "0.0.1",
   "description": "",
+  "private": false,
   "main": "src/index.mjs",
   "bin": {
     "run-qjs": "./bin/cli.mjs"
@@ -33,7 +34,7 @@
   "homepage": "https://github.com/allmors/qjs",
   "repository": "https://github.com/allmors/qjs",
   "bugs": "https://github.com/allmors/qjs/issues",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@fastify/cors": "^10.0.1",
     "@fastify/jwt": "^9.0.1",

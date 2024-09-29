@@ -13,7 +13,7 @@ const command = process.argv[2];
 process.env.QJS_ROOTDIR = process.env.QJS_ROOTDIR || 'functions';
 
 const template = `// @see https://github.com/allmors/qjs/
-import qjs from '@allmors/qjs/core';
+import qjs from 'fast-qjs/core';
 
 export default async function (params, ctx) {
     const User = await qjs.db.collection('user');
