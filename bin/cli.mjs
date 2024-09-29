@@ -12,8 +12,8 @@ const command = process.argv[2];
 
 process.env.QJS_ROOTDIR = process.env.QJS_ROOTDIR || 'functions';
 
-const template = `// @see https://github.com/hideipnetwork/qjs/
-// import qjs from '@hnet/qjs/core';
+const template = `// @see https://github.com/allmors/qjs/
+// import qjs from '@allmors/qjs/core';
 
 export default async function (params, ctx) {
     // const User = await qjs.db.collection('user');
@@ -42,6 +42,6 @@ if (command === '--init') {
 
 await start();
 
-if (fs.existsSync(file('qjs.js')) || fs.existsSync(file('qjs.cjs')) || fs.existsSync(file('qjs.mjs'))) {
+if (fs.existsSync(file('qjs.js')) || fs.existsSync(file('qjs.mjs'))) {
     open(`http://localhost:${process.env.QJS_PORT}${process.env.QJS_PREFIX}qjs`);
 }

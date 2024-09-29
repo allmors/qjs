@@ -12,7 +12,6 @@ import staticPlugin from '../plugins/static.mjs';
 import multipartPlugin from '../plugins/multipart.mjs';
 import jwtPlugin from '../plugins/jwt.mjs';
 import qjsCore from "../core/index.mjs"
-import exp from 'constants';
 
 const ROOTDIR = process.env.QJS_ROOTDIR || 'functions';
 const PORT = process.env.QJS_PORT || 5173;
@@ -44,12 +43,12 @@ const initServer = async () => {
             const pathWithoutPrefix = PREFIX ? url.pathname.slice(PREFIX.length) : url.pathname;
 
             // Bearer Token (Temporarily replace router options ==> onRequest)
-            if (request['headers'].authorization) {
-                const token = request['headers'].authorization.replace('Bearer ', '');
-                if (token) {
-                    const res = await fastify.jwt.verify(token)
-                    request.user = res;
-                }
+            const authHeader = request['headers'].authorization;
+            if (authHeader) {
+                const token = authHeader.replace('Bearer ', '');
+                request.user = token ? await fastify.jwt.verify(token) : null;
+            } else {
+                request.user = null;
             }
 
             for (const [route, handler] of routeHandlers.entries()) {
