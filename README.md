@@ -1,4 +1,3 @@
-```
 # 什么是qjs?
 
 **qjs**是一个基于**fastify**实现的轻量框架，通过使用`约定式`来进行api的快速生成，如果你想快速使用nodejs进行`RESTful API`开发，那么**qjs**是一个非常不错的选择
@@ -9,26 +8,22 @@
 - ......
 
 ### 快速开始
-```
 
+```
 npx create-qjs qjs-app && cd qjs-qpp
-
 ```
 
 ```
-
 npm install
-
 ```
 
 ```
-
 npm run start
-
 ```
+
 ### 项目结构
-```
 
+```
 qjs-app/
 │
 ├── db/                 # 数据库 (调用db接口才会创建)
@@ -40,9 +35,9 @@ qjs-app/
 ├── package.json        # 项目配置文件
 │
 ├── package-lock.json   # 依赖版本信息
-└── README.md           # 项目说明文件
-
+└── README.md           # 项目说明文件        
 ```
+
 ### 如何使用？
 
 通过上面的命令，你已经创建好了qjs项目，现在我们来一个个的分析：
@@ -55,19 +50,23 @@ qjs-app/
   "scripts": {
     "start": "cross-env QJS_ROOTDIR=functions QJS_PORT=5173 QJS_PREFIX=/api FFLY_STATIC=public run-qjs --init"
   }
-```
-
-- `QJS_PREFIX`:路由前缀
-  
-  ```js
-  QJS_PREFIX=/api
-  
-  // route
-  host:port/{QJS_PREFIX}/hello
   ```
-- `QJS_PORT`:qjs项目运行端口
-- `FFLY_STATIC`:公开目录
-- `QJS_ROOTDIR`:云函数目录，你使用最频繁的地方，具体看**functions**
+  
+  - `QJS_PREFIX`:路由前缀
+    
+    ```js
+    QJS_PREFIX=/api
+    
+    // route
+    host:port/{QJS_PREFIX}/hello
+    ```
+    
+  - `QJS_PORT`:qjs项目运行端口
+    
+  - `FFLY_STATIC`:公开目录
+    
+  - `QJS_ROOTDIR`:云函数目录，你使用最频繁的地方，具体看**functions**
+    
 - `functions`
   
   该目录为核心目录，如果你按照上面的命令进行创建并启动项目，那么qjs会自动创建functions目录，该目录为约定式api所在位置，其以文件名为api地址
@@ -85,6 +84,7 @@ qjs-app/
   └── DIR                       
       └── hello.mjs               # host:port/{QJS_PREFIX}/{DIR}/hello
   ```
+  
 
 ### 函数相关
 
@@ -114,19 +114,27 @@ export default async function (params, ctx) {
         }
     });
 }
+
 ```
 
 - `params`:
   
   - params.params `host:port/${QJS_PREFIX}/qjs/:id/:name`
+    
   - params.query `host:port/${QJS_PREFIX}/qjs?id=1321`
+    
   - params.body `host:port/${QJS_PREFIX}/qjs`==> `POST/PUT Method`
+    
 - ctx
   
   - ctx.method
+    
   - ctx.headers
+    
   - ctx.reply
+    
   - ...ctx
+    
 
 ***ctx完美继承了fastify，如果有需要，请查询fasify官方文档***
 
@@ -197,6 +205,7 @@ await Collection.rename()
   */
   async upload(content:File, name = null, options = {})
   ```
+  
 - delete()
   
   ```js
@@ -205,6 +214,7 @@ await Collection.rename()
   */
   async delete(params = {})
   ```
+  
 
 ### JWT鉴权
 
@@ -218,6 +228,7 @@ qjs既然是轻量化的接口框架，当然也提供了JWT相关，目前qjs�
   */
   async sign(payload:Object)
   ```
+  
 - verify()
   
   ```js
@@ -226,6 +237,7 @@ qjs既然是轻量化的接口框架，当然也提供了JWT相关，目前qjs�
   */
   async verify(token:string)
   ```
+  
 - Beare Token
   
   ```js
@@ -234,16 +246,3 @@ qjs既然是轻量化的接口框架，当然也提供了JWT相关，目前qjs�
          ctx.user
   }
   ```
-  
-  #### JWT示例
-
-```js
-export default async function (params, ctx) {
-     const token = await this.jwt.sign({ name: 'test' });
-     const vToken = await this.jwt.verify(token);
-     return ctx.reply.send({
-        message: 'Hello from qjs API',
-        method: context.method,
-        params: params);
-}
-```
