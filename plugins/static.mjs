@@ -21,6 +21,6 @@ fs.writeFileSync(filePath, content, 'utf8');
 
 export default {
     root: staticPath,
-    prefix: `/${STATIC}/`,
+    prefix: `/public/`,
     // constraints: { host: 'example.com' }
 }

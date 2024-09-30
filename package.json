@@ -8,7 +8,7 @@
     "run-qjs": "./bin/cli.mjs"
   },
   "scripts": {
-    "start": "cross-env QJS_ROOTDIR=functions QJS_PORT=5173 QJS_PREFIX=/api QJS_STATIC=uploads node --watch ./bin/cli.mjs"
+    "start": "cross-env QJS_ROOTDIR=functions QJS_PORT=5173 QJS_PREFIX=/api QJS_STATIC=public node --watch ./bin/cli.mjs"
   },
   "exports": {
     ".": {
