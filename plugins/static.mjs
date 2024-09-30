@@ -2,14 +2,25 @@
  * Static middleware
  * @see https://github.com/fastify/static
  */
-
 import path from 'path';
+import fs from 'fs';
 
-const STATIC = 'public';
-const __dirname = path.dirname(path.join(process.cwd(), STATIC));
+const STATIC = process.env.QJS_STATIC || 'public';
+const staticPath = path.join(process.cwd(), STATIC);
+
+// check directory
+if (!fs.existsSync(staticPath)) {
+    fs.mkdirSync(staticPath, { recursive: true });
+}
+
+const filePath = path.join(staticPath, 'hello.txt');
+const content = 'Hello Qjs';
+
+// write file
+fs.writeFileSync(filePath, content, 'utf8');
 
 export default {
-    root: path.join(`${__dirname}/${STATIC}`, `../public`),
+    root: staticPath,
     prefix: `/public/`,
     // constraints: { host: 'example.com' }
 }

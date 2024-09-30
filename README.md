@@ -14,21 +14,19 @@ npx create-qjs qjs-app && cd qjs-qpp
 ```
 
 ```
-npm install
-```
-
-```
 npm run start
 ```
 
 ### 项目结构
 
-```
+```js
 qjs-app/
 │
 ├── db/                 # 数据库 (调用db接口才会创建)
 │
 ├── functions/          # 云函数或其他功能模块（重点）
+│
+├── public/             # 对外公开目录
 │
 ├── node_modules/       # 依赖包目录
 │
@@ -48,7 +46,7 @@ qjs-app/
   
   ```json
   "scripts": {
-    "start": "cross-env QJS_ROOTDIR=functions QJS_PORT=5173 QJS_PREFIX=/api FFLY_STATIC=public run-qjs --init"
+    "start": "cross-env QJS_ROOTDIR=functions QJS_PORT=5173 QJS_PREFIX=/api QJS_STATIC=public run-qjs --init"
   }
   ```
   
@@ -63,7 +61,7 @@ qjs-app/
     
   - `QJS_PORT`:qjs项目运行端口
     
-  - `FFLY_STATIC`:公开目录
+  - `QJS_STATIC`:公开目录
     
   - `QJS_ROOTDIR`:云函数目录，你使用最频繁的地方，具体看**functions**
     
@@ -94,7 +92,7 @@ qjs-app/
 // functions/qjs.mjs
 
 // @see https://github.com/allmors/qjs/
-// import qjs from 'fast-qjs/core';
+// import qjs from '@allmors/qjs/core';
 
 export default async function (params, ctx) {
     // const User = await qjs.db.collection('user');
@@ -102,8 +100,8 @@ export default async function (params, ctx) {
 
     // or 
 
-    // const User = await this.db.collection('user');
-    // const user = await User.insertOne({ name: "Sam", email: 'sam@codingsamrat.com' })
+    const User = await this.db.collection('user');
+    const user = await User.insertOne({ name: "Sam", email: 'sam@codingsamrat.com' })
     // ......
 
     return ctx.reply.send({
@@ -114,7 +112,6 @@ export default async function (params, ctx) {
         }
     });
 }
-
 ```
 
 - `params`:
@@ -143,7 +140,7 @@ export default async function (params, ctx) {
 ```js
 // functions/qjs.mjs
 
-// import qjs from 'fast-qjs/core';
+// import qjs from '@allmors/qjs/core';
 // const User = await qjs.db.collection('user');
 // const user = await User.insertOne({ name: "Sam", email: 'sam@codingsamrat.com' })
 
@@ -203,7 +200,7 @@ await Collection.rename()
   * @name string
   * @options Object
   */
-  async upload(content:File, name = null, options = {})
+  async this.files.upload(content:File, name = null, options = {})
   ```
   
 - delete()
@@ -212,7 +209,7 @@ await Collection.rename()
   /*
   * @params {_id:string}
   */
-  async delete(params = {})
+  async this.files.delete(params = {})
   ```
   
 
@@ -226,7 +223,7 @@ qjs既然是轻量化的接口框架，当然也提供了JWT相关，目前qjs�
   /*
   * @payload {name:"张三",...} as Object
   */
-  async sign(payload:Object)
+  async this.jwt.sign(payload:Object)
   ```
   
 - verify()
@@ -235,7 +232,7 @@ qjs既然是轻量化的接口框架，当然也提供了JWT相关，目前qjs�
   /*
   * @token string
   */
-  async verify(token:string)
+  async this.jwt.verify(token:string)
   ```
   
 - Beare Token
@@ -246,3 +243,84 @@ qjs既然是轻量化的接口框架，当然也提供了JWT相关，目前qjs�
          ctx.user
   }
   ```
+  
+
+### 完整示例
+
+```js
+/**
+ * @param {*} params
+ * @ctx {request,reply,method,headers}
+ * @see https://github.com/allmors/qjs
+ */
+export default async function (params, ctx) {
+    /**
+     * use db
+     */
+    const sql = await this.db.collection('_files')
+
+    try {
+        /**
+         * if(ctx.method === 'PUT') {}
+         * if(ctx.method === 'DELETE') {}
+         * if(ctx.method === 'GET') {}
+         */
+        if (ctx.method === 'POST') {
+            const { file } = params
+            const res = await this.files.upload(file)
+            return ctx.reply.send({
+                message: 'Hello from test APIssfwe',
+                method: ctx.method,
+                params: {
+                    ...res
+                }
+            });
+        }
+
+        // get files
+        const file = await sql.findById(params.id);
+        // const t = await qjs.files.delete({ _id: params.id });
+
+        const token = await this.jwt.sign({ name: 'test' });
+
+        // verify = user
+        const verify = await this.jwt.verify(token);
+        // const user = ctx.user
+
+        return ctx.reply.send({
+            message: 'Hello from test API',
+            method: ctx.method,
+            params: {
+                token,
+                verify,
+                file
+            }
+        })
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+```
+
+### 响应
+
+```json
+{
+    "message": "Hello from test API",
+    "method": "GET",
+    "params": {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzdCIsImlhdCI6MTcyNzY1OTkyMn0.iC3m9WyOHdXVHbybiLveIxXaI7oX4Gu1dQWo7hotAT4",
+        "verify": {
+            "name": "test",
+            "iat": 1727659922
+        },
+        "file": {
+            "_id": "66f9fb5b00e6f64eb8b8fdb7",
+            "url": "/uploads/05942efe-071e-42-1727658843191/deKGMl9.jpg",
+            "name": "deKGMl9.jpg",
+            "type": "image/jpeg",
+            "size": 360969
+        }
+    }
+}
+```

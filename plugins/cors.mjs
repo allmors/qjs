@@ -2,7 +2,6 @@
  * CORS middleware
  * @see https://github.com/fastify/fastify-cors
  */
-
 export default {
     hook: 'preHandler',
     delegator: (req, callback) => {

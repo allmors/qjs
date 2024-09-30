@@ -2,7 +2,6 @@
  * JWT middleware
  * @see https://github.com/fastify/fastify-jwt
  */
-
 import jwt from '@fastify/jwt';
 import fastifyPlugin from 'fastify-plugin';
 
