@@ -33,7 +33,7 @@ export default async function (params, ctx) {
     return ctx.reply.send({
         message: 'Hello from qjs API',
         method: ctx.method,
-        params: {
+        result: {
             ...user
         }
     });
