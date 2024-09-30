@@ -204,8 +204,6 @@ const start = async () => {
     watchFiles(path.join(process.cwd(), ROOTDIR));
 };
 
-const file = (faas) => {
-    return path.resolve('.', process.env.QJS_ROOTDIR, faas);
-};
+const file = (qjs) => path.resolve('.', process.env.QJS_ROOTDIR, qjs);
 
 export { start, file };
