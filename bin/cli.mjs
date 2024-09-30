@@ -10,7 +10,9 @@ import open from 'open';
  */
 import { start, file } from "../src/index.mjs";
 
-const command = process.argv[2];
+const initCommand = process.argv[2];
+const openCommand = process.argv[3];
+
 process.env.QJS_ROOTDIR = process.env.QJS_ROOTDIR || 'functions';
 
 // const __filename = fileURLToPath(import.meta.url);
@@ -69,7 +71,7 @@ export default async function (params, ctx) {
 
 // copyDirectory(aProjectPluginsPath, bProjectPluginsPath);
 
-if (command === '--init') {
+if (initCommand === '--init') {
     if (!fs.existsSync(process.env.QJS_ROOTDIR)) {
         fs.mkdirSync(process.env.QJS_ROOTDIR);
         const qjsFile = path.join(process.env.QJS_ROOTDIR, 'qjs.mjs');
@@ -79,6 +81,6 @@ if (command === '--init') {
 
 await start();
 
-if ((fs.existsSync(file('qjs.js')) || fs.existsSync(file('qjs.mjs'))) && command === '--open') {
+if ((fs.existsSync(file('qjs.js')) || fs.existsSync(file('qjs.mjs'))) && openCommand === '--open') {
     open(`http://localhost:${process.env.QJS_PORT}${process.env.QJS_PREFIX}qjs`);
 }
