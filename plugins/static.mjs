@@ -5,7 +5,12 @@
 import path from 'path';
 import fs from 'fs';
 
-const STATIC = process.env.QJS_STATIC || 'public';
+let STATIC = process.env.QJS_STATIC || 'public';
+
+if(['db','functions'].includes(STATIC)) {
+    STATIC = 'public';
+}
+
 const staticPath = path.join(process.cwd(), STATIC);
 
 // check directory
