@@ -196,11 +196,12 @@ await Collection.rename()
   
   ```js
   /*
-  * @conent File
+  * @fileObj File
   * @name string
   * @options Object
+  * @options?.addOpton
   */
-  async this.files.upload(content:File, name = null, options = {})
+  async this.files.upload(fileObj:File, options = {})
   ```
   
 - delete()
