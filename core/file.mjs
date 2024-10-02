@@ -13,7 +13,7 @@ class Files {
         this.collection = collection;
     }
 
-    async upload(content, name = null, options = {}) {
+    async upload(fileObj, options = {}) {
         // Ensure the 'uploads' directory is created once
         const baseUploadDir = path.join(process.cwd(), 'uploads');
         if (!fs.existsSync(baseUploadDir)) {
@@ -31,19 +31,21 @@ class Files {
             return upPath;
         };
 
-        const filePath = path.join(fPath(), name || content.filename);
+        const filePath = path.join(fPath(), fileObj.filename);
         const writeStream = fs.createWriteStream(filePath);
 
         // Pump the content stream into the write stream
-        await pump(content.file, writeStream);
+        await pump(fileObj.file, writeStream);
 
         const relativePath = path.relative(path.resolve(process.cwd()), filePath);
         const url = pathToFileURL(path.join('/', relativePath)).toString().replace('file://', '');
+        const addOptions = options.addOptions || {};
         const fileData = {
             url,
             name: path.basename(filePath),
             type: options.type || mime.getType(filePath),
             size: fs.statSync(filePath).size,
+            ...addOptions
         };
         
         return await this.collection.create(fileData);
