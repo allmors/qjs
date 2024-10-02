@@ -199,7 +199,7 @@ await Collection.rename()
   * @fileObj File
   * @name string
   * @options Object
-  * @options?.addOptons
+  * @options?.addOptions
   */
   async this.files.upload(fileObj:File, options = {})
   ```
