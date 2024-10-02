@@ -92,7 +92,7 @@ qjs-app/
 // functions/qjs.mjs
 
 // @see https://github.com/allmors/qjs/
-// import qjs from '@allmors/qjs/core';
+// import qjs from '@fast-qjs/core';
 
 export default async function (params, ctx) {
     // const User = await qjs.db.collection('user');
