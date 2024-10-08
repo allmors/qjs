@@ -92,7 +92,7 @@ qjs-app/
 // functions/qjs.mjs
 
 // @see https://github.com/allmors/qjs/
-// import qjs from '@fast-qjs/core';
+// import qjs from 'fast-qjs/core';
 
 export default async function (params, ctx) {
     // const User = await qjs.db.collection('user');
@@ -140,7 +140,7 @@ export default async function (params, ctx) {
 ```js
 // functions/qjs.mjs
 
-// import qjs from '@allmors/qjs/core';
+// import qjs from 'fast-qjs/core';
 // const User = await qjs.db.collection('user');
 // const user = await User.insertOne({ name: "Sam", email: 'sam@codingsamrat.com' })
 
