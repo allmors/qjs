@@ -32,15 +32,15 @@ importers:
       fastify-plugin:
         specifier: ^5.0.1
         version: 5.0.1
-      filexdb:
-        specifier: ^0.1.1
-        version: 0.1.1
       mime:
         specifier: ^4.0.4
         version: 4.0.4
       open:
         specifier: ^10.1.0
         version: 10.1.0
+      qjs-db:
+        specifier: ^0.1.2
+        version: 0.1.2
     devDependencies:
       '@types/node':
         specifier: ^22.7.3
@@ -151,8 +151,8 @@ packages:
   brace-expansion@2.0.1:
     resolution: {integrity: sha512-XnAIvQ8eM+kC6aULx6wuQiwVsnzsi9d3WxzV3FpWTGA19F621kwdbsAcFKXgKUHZWsy+mY6iL1sHTxWEFCytDA==}
 
-  bson@6.8.0:
-    resolution: {integrity: sha512-iOJg8pr7wq2tg/zSlCCHMi3hMm5JTOxLTagf3zxhcenHsFp+c6uOs6K7W5UE7A4QIJGtqh/ZovFNMP4mOPJynQ==}
+  bson@6.9.0:
+    resolution: {integrity: sha512-X9hJeyeM0//Fus+0pc5dSUMhhrrmWwQUtdavaQeF3Ta6m69matZkGWV/MrBcnwUeLC8W9kwwc2hfkZgUuCX3Ig==}
     engines: {node: '>=16.20.1'}
 
   buffer@6.0.3:
@@ -273,9 +273,6 @@ packages:
 
   fastseries@1.7.2:
     resolution: {integrity: sha512-dTPFrPGS8SNSzAt7u/CbMKCJ3s01N04s4JFbORHcmyvVfVKmbhMD1VtRbh5enGHxkaQDqWyLefiKOGGmohGDDQ==}
-
-  filexdb@0.1.1:
-    resolution: {integrity: sha512-BbXkV4yHAqu5zFfpOS5X0XkY+wr3nhBqsN7jATEnC/g+/Uo6vaSDVtUx2H0PFfKjUmzcle1t586VxA9QP5jSzg==}
 
   find-my-way@9.0.1:
     resolution: {integrity: sha512-/5NN/R0pFWuff16TMajeKt2JyiW+/OE8nOO8vo1DwZTxLaIURb7lcBYPIgRPh61yCNh9l8voeKwcrkUzmB00vw==}
@@ -412,6 +409,9 @@ packages:
   proxy-addr@2.0.7:
     resolution: {integrity: sha512-llQsMLSUDUPT44jdrU/O37qlnifitDP+ZwrmmZcoSKyLKvtZxpyV0n2/bD/N4tBAAZ/gJEdZU7KMraoK1+XYAg==}
     engines: {node: '>= 0.10'}
+
+  qjs-db@0.1.2:
+    resolution: {integrity: sha512-neY3p5aFhwjMmoXVsbp30+5mtTVnY61refoVaIlmQWb+5PUdf+juHgsZaN+NCdXvVU7TYphHuKOY5El9kknksw==}
 
   quick-format-unescaped@4.0.4:
     resolution: {integrity: sha512-tYC1Q1hgyRuHgloV/YXs2w15unPVh8qfu/qCTfhTYamaw7fyhumKa2yGpdSo87vY32rIclj+4fWYQXUMs9EHvg==}
@@ -681,7 +681,7 @@ snapshots:
     dependencies:
       balanced-match: 1.0.2
 
-  bson@6.8.0: {}
+  bson@6.9.0: {}
 
   buffer@6.0.3:
     dependencies:
@@ -813,10 +813,6 @@ snapshots:
     dependencies:
       reusify: 1.0.4
       xtend: 4.0.2
-
-  filexdb@0.1.1:
-    dependencies:
-      bson: 6.8.0
 
   find-my-way@9.0.1:
     dependencies:
@@ -951,6 +947,10 @@ snapshots:
     dependencies:
       forwarded: 0.2.0
       ipaddr.js: 1.9.1
+
+  qjs-db@0.1.2:
+    dependencies:
+      bson: 6.9.0
 
   quick-format-unescaped@4.0.4: {}
 

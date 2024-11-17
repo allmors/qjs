@@ -1,4 +1,4 @@
-import FileXdb from 'filexdb'
+import FileXdb from 'qjs-db'
 import path from 'path'
 import Files from './file.mjs'
 
