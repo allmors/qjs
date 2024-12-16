@@ -5,6 +5,7 @@ import chokidar from 'chokidar';
 import cors from '@fastify/cors';
 import staticFile from "@fastify/static";
 import multipart from '@fastify/multipart';
+import { pathToFileURL } from "url";
 
 // custom
 import corsPlugin from '../plugins/cors.mjs';
@@ -111,12 +112,16 @@ const matchRoute = (routePattern, url) => {
 
 // Handler function in loadRoute
 const loadRoute = async (fullPath, baseRoute) => {
-    const route = path.join(baseRoute, parseRouteFromFilename(path.basename(fullPath)));
+    const normalizedFullPath = path.normalize(fullPath);
+    const route = path.join(baseRoute, parseRouteFromFilename(path.basename(normalizedFullPath)));
     // Remove any double slashes and ensure there's a leading slash
-    const normalizedRoute = '/' + route.split('/').filter(Boolean).join('/');
+    // const normalizedRoute = '/' + route.split('/').filter(Boolean).join('/');
+    const normalizedRoute = '/' + route.replace(/\\/g, '/').split('/').filter(Boolean).join('/');
 
     try {
-        const apiModule = await import(`${fullPath}?update=${Date.now()}`);
+        const moduleUrl = pathToFileURL(fullPath).toString();
+        const apiModule = await import(`${moduleUrl}?update=${Date.now()}`);
+
         const apiFunction = apiModule.default;
 
         if (typeof apiFunction === 'function') {
