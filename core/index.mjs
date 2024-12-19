@@ -1,6 +1,7 @@
 import FileXdb from 'qjs-db'
 import path from 'path'
 import Files from './file.mjs'
+import QjsAi from './ai.mjs';
 
 const ROOTDIR = process.env.QJS_ROOTDIR || 'functions';
 // Initiate database
@@ -10,7 +11,10 @@ const db = new FileXdb(`${__dirname}/db/qjs.db`)
 
 const files = new Files(await db.collection('_files'));
 
+const ai = new QjsAi();
+
 export default {
     db,
-    files
+    files,
+    ai
 }

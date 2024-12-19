@@ -32,6 +32,7 @@ const initServer = async () => {
     // Use decorator to add custom methods to fastify instance
     await fastify.decorate('db', qjsCore.db)
     await fastify.decorate('files', qjsCore.files)
+    await fastify.decorate('ai', qjsCore.ai)
 
     // Add a catch-all route to handle dynamic routes
     fastify.all(`${PREFIX || ''}/*`,
