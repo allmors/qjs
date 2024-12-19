@@ -38,7 +38,10 @@ class Files {
         await pump(fileObj.file, writeStream);
 
         const relativePath = path.relative(path.resolve(process.cwd()), filePath);
-        const url = pathToFileURL(path.join('/', relativePath)).toString().replace('file://', '');
+        // Fix for cross-platform compatibility
+        const normalizedPath = path.normalize(relativePath).split(path.sep).join('/');
+        const url = normalizedPath;
+
         const addOptions = options.addOptions || {};
         const fileData = {
             url,
@@ -54,10 +57,13 @@ class Files {
     async delete(params = {}) {
         const fileRecord = await this.collection.findById(params._id);
         if (fileRecord) {
-            let filepath = fileURLToPath(`file://${fileRecord.url}`);
-            filepath = path.resolve(process.cwd(), filepath.slice(1));
-            fs.unlinkSync(filepath);
-            fs.rmSync(path.dirname(filepath), { recursive: true });
+            const filepath = path.resolve(process.cwd(), fileRecord.url);
+
+            if (fs.existsSync(filepath)) {
+                fs.unlinkSync(filepath);
+                fs.rmSync(path.dirname(filepath), { recursive: true });
+            }
+
             return await this.collection.findByIdAndDelete(params._id);
         }
         return null;

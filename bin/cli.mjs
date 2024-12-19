@@ -82,5 +82,5 @@ if (initCommand === '--init') {
 await start();
 
 if ((fs.existsSync(file('qjs.js')) || fs.existsSync(file('qjs.mjs'))) && openCommand === '--open') {
-    open(`http://localhost:${process.env.QJS_PORT}${process.env.QJS_PREFIX}qjs`);
+    open(`http://localhost:${process.env.QJS_PORT}${process.env.QJS_PREFIX}/qjs`);
 }
