@@ -3,7 +3,6 @@ import fs from 'fs';
 import { pipeline } from 'stream';
 import { promisify } from 'util';
 import { randomUUID } from 'node:crypto';
-import { pathToFileURL, fileURLToPath } from 'url';
 import mime from 'mime';
 
 const pump = promisify(pipeline);

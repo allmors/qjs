@@ -46,6 +46,7 @@
     "fastify-plugin": "^5.0.1",
     "mime": "^4.0.4",
     "open": "^10.1.0",
+    "openai": "^4.77.0",
     "qjs-db": "^0.1.2"
   },
   "devDependencies": {
